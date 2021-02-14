@@ -1,6 +1,6 @@
 # GateBuilder
 Just a test library to experiment with my neural network framework.
-You can compute AND (& NOR), OR (& NOR), XOR (& XOR) via three neural networks with it.
+You can compute AND (& NOR), OR (& NOR), XOR (& XNOR) via three neural networks with it.
 
 The neural network framework isn't public, so you actually can't. 
 Nonetheless here is an example:
