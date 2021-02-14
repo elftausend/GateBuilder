@@ -69,18 +69,17 @@ impl GateCreator {
     pub fn new() -> GateCreator {
         GateCreator { networks: RefCell::new(Vec::new())}
     }
-    pub fn add(&self, net: Network<f32>) -> usize {
+    pub fn push(&self, net: Network<f32>) -> usize {
         let len = self.networks.borrow().len();
         self.networks.borrow_mut().push(net);
         len
     }
     pub fn gate<'a>(&'a self, net: Network<f32>) -> Gate<'a> {
-        let len = self.add(net.clone());
+        let len = self.push(net.clone());
         Gate {
             index: len,
             creator: self
         }    
-    
     }
     pub fn compute(&self, index: usize, input: Matrix<f32>) -> GateOutput {
         let output = &self.networks.borrow_mut()[index].forward(input).data[0];

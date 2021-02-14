@@ -1,55 +1,57 @@
-
+#![allow(non_snake_case)]
 pub mod training;
 pub mod gate;
 
-use std::cell::RefCell;
+#[cfg(test)]
+mod tests {
 
-use combine::{Matrix, Module, ModuleType, Network};
-use training::train_nets;
-use gate::*;
+  use combine::Matrix;
+  use crate::gate::*;
 
-#[test]
-fn test() {
-    //train_nets();
+  #[test]
+  fn test() {
+      crate::training::train_nets();
 
-    let x: Matrix<f32> = Matrix::from_vector(1, 2, vec![1., 1.]);
-
-
+      //let x: Matrix<f32> = Matrix::from_vector(1, 2, vec![1., 1.]);
 
 
-    let input1: Matrix<f32> = Matrix::from_vector(1, 2, vec![1., 1.]);
-    let input2: Matrix<f32> = Matrix::from_vector(1, 2, vec![1., 1.]);
 
-    let input3: Matrix<f32> = Matrix::from_vector(1, 2, vec![1., 0.]);
-    
-    let gc = GateCreator::new();
 
-    let and = gc.gate(GateLoader::load_and()); //.negate nand
-    let xor = gc.gate(GateLoader::load_xor()); //.negate xnor
-    let or = gc.gate(GateLoader::load_or()); //.negate nor
+      let input1: Matrix<f32> = Matrix::from_vector(1, 2, vec![1., 1.]);
+      let input2: Matrix<f32> = Matrix::from_vector(1, 2, vec![1., 1.]);
 
-    //2x input AND 1x output -> 2x input NAND -> 1x output -> 2x input XNOR
-    //2x input NOR 1x output -> 
-    //2x input XOR 1x output -> ->      ->          ->     ->
-    //let gate = xor.compute(xor.compute(input3)+(and.compute(and.compute(input1)+or.compute(input2).negate()))).negate();
+      let input3: Matrix<f32> = Matrix::from_vector(1, 2, vec![1., 0.]);
+      
+      let gc = GateCreator::new();
 
-    let gate = xor.compute(input3).negate();
-    println!("g: {:?}", gate);
+      let and = gc.gate(GateLoader::load_and()); //.negate nand
+      let xor = gc.gate(GateLoader::load_xor()); //.negate xnor
+      let or = gc.gate(GateLoader::load_or()); //.negate nor
 
-    //let f = or.compute(input1).negate()+and.compute(input2);
-    //println!("f: {:?}", f);
+      //2x input AND 1x output -> 2x input NAND -> 1x output -> 2x input XNOR
+      //2x input NOR 1x output -> 
+      //2x input XOR 1x output -> ->      ->          ->     ->
+      let gate = xor.compute(xor.compute(input3)+(and.compute(and.compute(input1)+or.compute(input2).negate()))).negate();
 
-    /* 
-    
-    let forward = or.compute(x.clone());
-    //forward.negate();
-    println!("or forward: {:?}", forward.negate());
+    // let gate = xor.compute(input3).negate();
+      println!("g: {:?}", gate);
 
-    let forward = xor.compute(x.clone());
-    println!("xor forward: {:?}", forward);
+      //let f = or.compute(input1).negate()+and.compute(input2);
+      //println!("f: {:?}", f);
 
-    let forward = and.compute(x);
-    println!("and forward: {:?}", forward);
-    */
-    
+      /* 
+      
+      let forward = or.compute(x.clone());
+      //forward.negate();
+      println!("or forward: {:?}", forward.negate());
+
+      let forward = xor.compute(x.clone());
+      println!("xor forward: {:?}", forward);
+
+      let forward = and.compute(x);
+      println!("and forward: {:?}", forward);
+      */
+      
+  }
+
 }
