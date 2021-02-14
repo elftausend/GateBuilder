@@ -1,5 +1,5 @@
 [package]
-name = "GateBuilder"
+name = "gate-builder"
 version = "0.1.0"
 authors = ["elftausend"]
 edition = "2018"

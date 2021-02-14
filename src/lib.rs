@@ -10,7 +10,7 @@ mod tests {
 
   #[test]
   fn test() {
-      crate::training::train_nets();
+      //crate::training::train_nets();
 
       //let x: Matrix<f32> = Matrix::from_vector(1, 2, vec![1., 1.]);
 
@@ -28,9 +28,7 @@ mod tests {
       let xor = gc.gate(GateLoader::load_xor()); //.negate xnor
       let or = gc.gate(GateLoader::load_or()); //.negate nor
 
-      //2x input AND 1x output -> 2x input NAND -> 1x output -> 2x input XNOR
-      //2x input NOR 1x output -> 
-      //2x input XOR 1x output -> ->      ->          ->     ->
+    
       let gate = xor.compute(xor.compute(input3)+(and.compute(and.compute(input1)+or.compute(input2).negate()))).negate();
 
     // let gate = xor.compute(input3).negate();
