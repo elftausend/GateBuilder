@@ -29,8 +29,8 @@ pub fn train_nets() {
   //  let mut network_neg = Network::new(Matrix::new(0, 0, 0.));
     let mut network = Network::new(Matrix::new(0, 0, 0.));
 
-    network.add(ModuleType::new(Sigmoid, 2, 4));
-    network.add(ModuleType::new(Sigmoid, 4, 1));
+    network.add(ModuleType::new(Sigmoid, 2, 2));
+    network.add(ModuleType::new(Sigmoid, 2, 1));
     network.add(ModuleType::new(Relu, 1, 1));
 
     let inthread1 = inputs.clone();
