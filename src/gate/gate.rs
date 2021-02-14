@@ -37,7 +37,7 @@ impl std::ops::Add for GateOutput {
 #[derive(Clone, Copy)]
 pub struct Gate<'a> {
     pub index: usize,
-    creator: &'a GateCreator,
+    creator: &'a GateBuilder,
 
 }
 
@@ -61,13 +61,13 @@ impl GateLoader {
         WeightsStore::new().construct("./gates/xor/")
     }
 }
-pub struct GateCreator {
+pub struct GateBuilder {
     pub networks: RefCell<Vec<Network<f32>>>,
 }
 
-impl GateCreator {
-    pub fn new() -> GateCreator {
-        GateCreator { networks: RefCell::new(Vec::new())}
+impl GateBuilder {
+    pub fn new() -> GateBuilder {
+        GateBuilder { networks: RefCell::new(Vec::new())}
     }
     pub fn push(&self, net: Network<f32>) -> usize {
         let len = self.networks.borrow().len();

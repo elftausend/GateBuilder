@@ -12,7 +12,7 @@ use combine::Matrix;
 let input: Matrix<f32> = Matrix::from_vector(1, 2, vec![0., 1.,]);
 let input1: Matrix<f32> = Matrix::from_vector(1, 2, vec![0., 0.,]);
 
-let gb = GateCreator::new();
+let gb = GateBuilder::new();
 let and = gb.gate(GateLoader::load_and()); //.negate NAND
 let or = gb.gate(GateLoader::load_or()); //.negate NOR
 

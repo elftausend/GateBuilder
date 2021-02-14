@@ -22,11 +22,11 @@ mod tests {
 
       let input3: Matrix<f32> = Matrix::from_vector(1, 2, vec![1., 0.]);
       
-      let gc = GateCreator::new();
+      let gb = GateBuilder::new();
 
-      let and = gc.gate(GateLoader::load_and()); //.negate nand
-      let xor = gc.gate(GateLoader::load_xor()); //.negate xnor
-      let or = gc.gate(GateLoader::load_or()); //.negate nor
+      let and = gb.gate(GateLoader::load_and()); //.negate nand
+      let xor = gb.gate(GateLoader::load_xor()); //.negate xnor
+      let or = gb.gate(GateLoader::load_or()); //.negate nor
 
     
       let gate = xor.compute(xor.compute(input3)+(and.compute(and.compute(input1)+or.compute(input2).negate()))).negate();
