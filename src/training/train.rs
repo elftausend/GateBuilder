@@ -6,6 +6,7 @@ use rand::prelude::*;
 
 const EPOCHS: usize = 1691*2;
 const INPUT_DUR: usize = 170*2;
+const LEARNING_RATE: f32 = 7.;
 
 fn get_rand_idx(max: usize) -> usize {
     let mut rng = rand::thread_rng();
@@ -42,7 +43,7 @@ pub fn train_nets() {
     
    // let input = 
   //  let mut network_neg = Network::new(Matrix::new(0, 0, 0.));
-    let mut network = Network::new(Matrix::new(0, 0, 0.));
+    let mut network = Network::new();
 
     network.add(ModuleType::new(Sigmoid, 2, 2));
     network.add(ModuleType::new(Sigmoid, 2, 1));
@@ -100,13 +101,14 @@ pub fn train_and(inputs: [Matrix<f32>; 4], net: Network<f32>) {
 
     WeightsStore::new().save(net.clone(), "./gates/and/");
     let mut net = WeightsStore::new().construct("./gates/and/");
+    net.learning_rate(LEARNING_RATE);
 
     for _x in 0..EPOCHS {
         let idx = get_rand_idx(4);
         //println!("idx: {}", idx);
         let input = inputs[idx].clone();
         
-        net.aiming = Matrix::new(1, 1, get_index(input.clone(), [0., 0., 0., 1.,]));
+        net.aiming(Matrix::new(1, 1, get_index(input.clone(), [0., 0., 0., 1.,])));
         for _x in 0..INPUT_DUR {
             net.backwards(input.clone());
         }
@@ -120,13 +122,14 @@ pub fn train_and(inputs: [Matrix<f32>; 4], net: Network<f32>) {
 pub fn train_or(inputs: [Matrix<f32>; 4], net: Network<f32>) {
     WeightsStore::new().save(net.clone(), "./gates/or/");
     let mut net = WeightsStore::new().construct("./gates/or/");
+    net.learning_rate(LEARNING_RATE);
 
     for _x in 0..EPOCHS {
         let idx = get_rand_idx(4);
         //println!("idx: {}", idx);
         let input = inputs[idx].clone();
 
-        net.aiming = Matrix::new(1, 1, get_index(input.clone(), [0., 1., 1., 1.,]));
+        net.aiming(Matrix::new(1, 1, get_index(input.clone(), [0., 1., 1., 1.,])));
         //net.aiming = Matrix::from_vector(1, 1, aiming);
         for _x in 0..INPUT_DUR {
             net.backwards(input.clone());
@@ -141,6 +144,7 @@ pub fn train_xor(inputs: [Matrix<f32>; 4], net: Network<f32>) {
 
     WeightsStore::new().save(net.clone(), "./gates/xor/");
     let mut net = WeightsStore::new().construct("./gates/xor/");
+    net.learning_rate(LEARNING_RATE);
 
     for _x in 0..EPOCHS {
         let idx = get_rand_idx(4);
@@ -149,7 +153,7 @@ pub fn train_xor(inputs: [Matrix<f32>; 4], net: Network<f32>) {
       //  println!("input: {:?}", input);
        // println!("aiming: {:?}", get_index(input.clone(), [0., 1., 1., 0.,]));
        // println!("");
-        net.aiming = Matrix::new(1, 1, get_index(input.clone(), [0., 1., 1., 0.,]));
+        net.aiming(Matrix::new(1, 1, get_index(input.clone(), [0., 1., 1., 0.,])));
       //  net.aiming = Matrix::from_vector(1, 1, aiming);
         for _x in 0..INPUT_DUR {
             net.backwards(input.clone());

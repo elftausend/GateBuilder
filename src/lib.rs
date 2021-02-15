@@ -15,7 +15,7 @@ mod tests {
       let input1: Matrix<f32> = Matrix::from_vector(1, 2, vec![1., 1.]);
       let input2: Matrix<f32> = Matrix::from_vector(1, 2, vec![1., 1.]);
 
-      let input3: Matrix<f32> = Matrix::from_vector(1, 2, vec![1., 0.]);
+      let _input3: Matrix<f32> = Matrix::from_vector(1, 2, vec![1., 0.]);
       
       let gb = GateBuilder::new();
 
@@ -24,15 +24,15 @@ mod tests {
       let or = gb.gate(GateLoader::load_or()); //.negate nor
 
     
-      let gate = xor.compute(xor.compute(input3)+(and.compute(and.compute(input1)+or.compute(input2).negate()))).negate();
+   //  let gate = xor.compute(xor.compute(input3)+(and.compute(and.compute(input1)+or.compute(input2).negate()))).negate();
 
     // let gate = xor.compute(input3).negate();
-      println!("g: {:?}", gate);
+  //    println!("g: {:?}", gate);
 
-      //let f = or.compute(input1).negate()+and.compute(input2);
-      //println!("f: {:?}", f);
+      let f = or.compute(input1).negate()+and.compute(input2);
+      println!("f: {:?}", f);
 
-      let x: Matrix<f32> = Matrix::from_vector(1, 2, vec![0., 0.]);
+      let x: Matrix<f32> = Matrix::from_vector(1, 2, vec![1., 0.]);
       
       let forward = or.compute(x.clone());
       //forward.negate();
