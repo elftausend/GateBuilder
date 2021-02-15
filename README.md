@@ -1,8 +1,9 @@
 # GateBuilder
-Just a test library to experiment with my neural network framework.
+Just a test library to experiment with my neural network framework [combine].
 You can compute AND (& NOR), OR (& NOR), XOR (& XNOR) via three neural networks with it.
 
-The neural network framework isn't public, so you actually can't. 
+[combine]: https://github.com/elftausend/combine
+ 
 Nonetheless here is an example:
 
 ```rust
