@@ -12,6 +12,21 @@ fn get_rand_idx(max: usize) -> usize {
     rng.gen_range(0..max)
 }
 
+fn get_index(input: Matrix<f32>, values: [f32; 4]) -> f32 {
+    if input.data[0] == 0. && input.data[1] == 0. {
+        values[0]
+    }
+    else if input.data[0] == 1. && input.data[1] == 0. {
+        values[1]
+    }
+    else if input.data[0] == 0. && input.data[1] == 1. {
+        values[2]
+    }
+    else {
+        values[3]
+    }
+}
+
 pub fn train_nets() {
     /*
     let inputs_neg: [Matrix<f32>; 2] = [Matrix::from_vector(1, 1, vec![0.]),
@@ -90,20 +105,8 @@ pub fn train_and(inputs: [Matrix<f32>; 4], net: Network<f32>) {
         let idx = get_rand_idx(4);
         //println!("idx: {}", idx);
         let input = inputs[idx].clone();
-        let mut aiming = Vec::new();
-        if input.data[0] == 0. && input.data[1] == 0. {
-            aiming = vec![0.];
-        }
-        if input.data[0] == 1. && input.data[1] == 0. {
-            aiming = vec![0.];
-        }
-        if input.data[0] == 0. && input.data[1] == 1. {
-            aiming = vec![0.];
-        }
-        if input.data[0] == 1. && input.data[1] == 1. {
-            aiming = vec![1.];
-        }
-        net.aiming = Matrix::from_vector(1, 1, aiming);
+        
+        net.aiming = Matrix::new(1, 1, get_index(input.clone(), [0., 0., 0., 1.,]));
         for _x in 0..INPUT_DUR {
             net.backwards(input.clone());
         }
@@ -122,20 +125,9 @@ pub fn train_or(inputs: [Matrix<f32>; 4], net: Network<f32>) {
         let idx = get_rand_idx(4);
         //println!("idx: {}", idx);
         let input = inputs[idx].clone();
-        let mut aiming = Vec::new();
-        if input.data[0] == 0. && input.data[1] == 0. {
-            aiming = vec![0.];
-        }
-        if input.data[0] == 1. && input.data[1] == 0. {
-            aiming = vec![1.];
-        }
-        if input.data[0] == 0. && input.data[1] == 1. {
-            aiming = vec![1.];
-        }
-        if input.data[0] == 1. && input.data[1] == 1. {
-            aiming = vec![1.];
-        }
-        net.aiming = Matrix::from_vector(1, 1, aiming);
+
+        net.aiming = Matrix::new(1, 1, get_index(input.clone(), [0., 1., 1., 1.,]));
+        //net.aiming = Matrix::from_vector(1, 1, aiming);
         for _x in 0..INPUT_DUR {
             net.backwards(input.clone());
         }
@@ -154,20 +146,11 @@ pub fn train_xor(inputs: [Matrix<f32>; 4], net: Network<f32>) {
         let idx = get_rand_idx(4);
         //println!("idx: {}", idx);
         let input = inputs[idx].clone();
-        let mut aiming = Vec::new();
-        if input.data[0] == 0. && input.data[1] == 0. {
-            aiming = vec![0.];
-        }
-        if input.data[0] == 1. && input.data[1] == 0. {
-            aiming = vec![1.];
-        }
-        if input.data[0] == 0. && input.data[1] == 1. {
-            aiming = vec![1.];
-        }
-        if input.data[0] == 1. && input.data[1] == 1. {
-            aiming = vec![0.];
-        }
-        net.aiming = Matrix::from_vector(1, 1, aiming);
+      //  println!("input: {:?}", input);
+       // println!("aiming: {:?}", get_index(input.clone(), [0., 1., 1., 0.,]));
+       // println!("");
+        net.aiming = Matrix::new(1, 1, get_index(input.clone(), [0., 1., 1., 0.,]));
+      //  net.aiming = Matrix::from_vector(1, 1, aiming);
         for _x in 0..INPUT_DUR {
             net.backwards(input.clone());
         }
